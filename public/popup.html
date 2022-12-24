@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>My Chrome Extension</title>
-    <link rel="stylesheet" href="popup.css" />
-  </head>
-  <body>
-    <div class="app">
-      <p class="counter-label">Counter</p>
-      <div id="counter" class="counter"></div>
-      <div class="button-container">
-        <button id="decrementBtn" class="button">-</button>
-        <button id="incrementBtn" class="button">+</button>
-      </div>
 
-      <hr class="divider" />
+<head>
+  <meta charset="UTF-8" />
+  <title>JotForm Check Authentication</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
 
-      <p class="title">Chrome Extension is Ready!</p>
-      <p class="subtitle">Start by updating <code>popup.html</code></p>
+<body>
+  <div class="app">
+    <img class="podo-pixel-art" src="./icons/pixel-art-2.jpg" alt="Poto Pixel Art">
+
+    <p class="check-auth-label">
+      <span class="jotform">Jotform</span>&nbsp;Check Authentication
+    </p>
+
+    <p class="status-label">
+      <span class="status">
+        <span class="status-text">Status:</span>
+        <span id="status-value" class="status-value">???</span>
+      </span>
+    </p>
+
+    <div class="button-container">
+      <button id="check-button" class="button">Check Authentication</button>
     </div>
-
+    <!-- <hr class="divider" /> -->
     <script src="popup.js"></script>
-
     <!--
-      This HTML file opens when you click on icon from the toolbar.
+        This HTML file opens when you click on icon from the toolbar.
 
-      To begin the development, run `npm run watch`.
-      To create a production bundle, use `npm run build`.
-    -->
-  </body>
+        To begin the development, run `npm run watch`.
+        To create a production bundle, use `npm run build`.
+      -->
+</body>
+
 </html>
