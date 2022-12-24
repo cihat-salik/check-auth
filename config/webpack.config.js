@@ -1,9 +1,11 @@
 'use strict';
 
 const { merge } = require('webpack-merge');
+const Dotenv = require('dotenv-webpack');
 
 const common = require('./webpack.common.js');
 const PATHS = require('./paths');
+
 
 // Merge webpack configuration files
 const config = (env, argv) =>
@@ -14,6 +16,9 @@ const config = (env, argv) =>
       background: PATHS.src + '/background.js',
     },
     devtool: argv.mode === 'production' ? false : 'source-map',
+    plugins: [
+      new Dotenv()
+    ]
   });
 
 module.exports = config;
