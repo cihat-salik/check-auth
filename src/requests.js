@@ -1,14 +1,12 @@
 async function checkAuthRequest() {
-  const res = await fetch('https://support.jotform.com/jfadmin/', {
+  const res = await fetch(process.env.API_URL, {
     method: 'GET',
   });
-
-  console.log('res', res);
 
   return res;
 }
 
-// login with google accound and get cookies
+//TODO: login with google account
 async function loginWithGoogleAccount() {
   // coming soon
 }
