@@ -59,7 +59,7 @@ body {
 }
 
 .status-label {
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 5px;
   margin: 0.8rem 0;
 }
@@ -81,17 +81,17 @@ body {
 }
 
 .button-container {
-  margin-top: 15px;
+  margin-top: 8px;
 }
 
 .button {
   border: 0;
   display: inline-block;
-  padding: 10px 20px;
+  padding: 8px 18px;
   margin-right: 4px;
   margin-left: 4px;
   background-color: bisque;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   border-radius: 4px;
   text-decoration: none;
