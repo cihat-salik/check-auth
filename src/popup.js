@@ -1,6 +1,7 @@
 'use strict';
 
 import './popup.css';
+import { checkAuthRequest, loginWithGoogleAccount } from './requests';
 
 (function () {
   // We will make use of Storage API to get and store `count` value
@@ -10,16 +11,18 @@ import './popup.css';
   // To get storage access, we have to mention it in `permissions` property of manifest.json file
   // More information on Permissions can we found at
   // https://developer.chrome.com/extensions/declare_permissions
-  const counterStorage = {
+
+  const isAuthStorage = {
     get: (cb) => {
-      chrome.storage.sync.get(['count'], (result) => {
-        cb(result.count);
+      chrome.storage.sync.get(['isAuth'], (result) => {
+        cb(result.isAuth);
+        chrome.storage.local.set({ isAuth: result.isAuth });
       });
     },
     set: (value, cb) => {
       chrome.storage.sync.set(
         {
-          count: value,
+          isAuth: value,
         },
         () => {
           cb();
@@ -28,85 +31,66 @@ import './popup.css';
     },
   };
 
-  function setupCounter(initialValue = 0) {
-    document.getElementById('counter').innerHTML = initialValue;
-
-    document.getElementById('incrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'INCREMENT',
-      });
-    });
-
-    document.getElementById('decrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'DECREMENT',
-      });
-    });
+  function setupCheckAuth(initialValue) {
+    document.getElementById('check-button').addEventListener(
+      'click',
+      () => {
+        checkAuth(initialValue);
+      },
+      { once: true }
+    );
   }
 
-  function updateCounter({ type }) {
-    counterStorage.get((count) => {
-      let newCount;
-
-      if (type === 'INCREMENT') {
-        newCount = count + 1;
-      } else if (type === 'DECREMENT') {
-        newCount = count - 1;
-      } else {
-        newCount = count;
-      }
-
-      counterStorage.set(newCount, () => {
-        document.getElementById('counter').innerHTML = newCount;
-
-        // Communicate with content script of
-        // active tab by sending a message
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-          const tab = tabs[0];
-
-          chrome.tabs.sendMessage(
-            tab.id,
-            {
-              type: 'COUNT',
-              payload: {
-                count: newCount,
-              },
-            },
-            (response) => {
-              console.log('Current count value passed to contentScript file');
-            }
-          );
-        });
-      });
-    });
-  }
-
-  function restoreCounter() {
-    // Restore count value
-    counterStorage.get((count) => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
+  function updateStatus() {
+    isAuthStorage.get((isAuth) => {
+      if (typeof isAuth === 'undefined') {
+        isAuthStorage.set(false, () => {
+          setupCheckAuth(false);
         });
       } else {
-        setupCounter(count);
+        setupCheckAuth(isAuth);
       }
     });
   }
 
-  document.addEventListener('DOMContentLoaded', restoreCounter);
+  function updateDom(res) {
+    const checkButton = document.getElementById('check-button');
+    const statusValue = document.getElementById('status-value');
+    if (!checkButton && !statusValue) return;
+
+    if (res.status === 200) {
+      statusValue.innerHTML = 'Authenticated';
+      statusValue.className = 'authenticated';
+    } else if (res.status === 404) {
+      statusValue.innerHTML = 'Not Authenticated';
+      statusValue.className = 'not-authenticated';
+    }
+  }
+
+  async function checkAuth(initialValue) {
+    let isAuth = initialValue;
+    const res = await checkAuthRequest();
+
+    updateDom(res);
+
+    res.status === 200 ? (isAuth = true) : (isAuth = false);
+    return isAuthStorage.set(isAuth, () => {
+      updateStatus(isAuth);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', checkAuth);
 
   // Communicate with background file by sending a message
-  chrome.runtime.sendMessage(
-    {
-      type: 'GREETINGS',
-      payload: {
-        message: 'Hello, my name is Pop. I am from Popup.',
-      },
-    },
-    (response) => {
-      console.log(response.message);
-    }
-  );
+  // chrome.runtime.sendMessage(
+  //   {
+  //     type: 'GREETINGS',
+  //     payload: {
+  //       message: 'Hello, my name is Pop. I am from Popup.',
+  //     },
+  //   },
+  //   (response) => {
+  //     console.log(response.message);
+  //   }
+  // );
 })();
