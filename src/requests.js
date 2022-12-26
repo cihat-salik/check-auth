@@ -1,5 +1,5 @@
 async function checkAuthRequest() {
-  const res = await fetch(process.env.API_URL, {
+  const res = await fetch(process.env.API_URL_1, {
     method: 'GET',
   });
 
@@ -11,4 +11,10 @@ async function loginWithGoogleAccount() {
   // coming soon
 }
 
-export { checkAuthRequest, loginWithGoogleAccount };
+async function logout() {
+  await fetch(process.env.API_URL_2, {
+    method: 'GET',
+  })
+}
+
+export { checkAuthRequest, loginWithGoogleAccount, logout };

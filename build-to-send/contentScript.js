@@ -1,0 +1,1 @@
+(()=>{"use strict";const e=document.head.getElementsByTagName("title")[0].innerHTML;console.log(`Page title is: '${e}' - evaluated by Chrome extension's 'contentScript.js' file`),chrome.storage.local.get(["isAuth"],(function(e){console.log("Value currently is "+e.isAuth)}))})();

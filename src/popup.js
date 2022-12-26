@@ -1,7 +1,7 @@
 'use strict';
 
 import './popup.css';
-import { checkAuthRequest, loginWithGoogleAccount } from './requests';
+import { checkAuthRequest, loginWithGoogleAccount, logout } from './requests';
 
 (function () {
   const isAuthStorage = {
@@ -24,10 +24,15 @@ import { checkAuthRequest, loginWithGoogleAccount } from './requests';
   };
 
   function setupCheckAuth(initialValue) {
-    document.getElementById('check-button').addEventListener(
+    const checkButton = document.getElementById('check-button')
+    checkButton.addEventListener(
       'click',
       () => {
         checkAuth(initialValue);
+        checkButton.disabled = true;
+        setTimeout(() => {
+          checkButton.disabled = false;
+        }, 5000);
       },
       { once: true }
     );
@@ -48,7 +53,18 @@ import { checkAuthRequest, loginWithGoogleAccount } from './requests';
   function updateDom(res) {
     const checkButton = document.getElementById('check-button');
     const statusValue = document.getElementById('status-value');
+    const linkWrapper = document.getElementById('go-jf');
     if (!checkButton && !statusValue) return;
+
+    // check button to child elements because it can be added before
+    if (linkWrapper.children.length > 0) return;
+    const link = document.createElement('a');
+    linkWrapper.classList = 'button'
+    link.href = 'https://www.jotform.com/';
+    link.setAttribute('target', '_blank');
+    link.innerHTML = 'Go to the JotForm';
+    link.className = 'link';
+    linkWrapper.appendChild(link);
 
     if (res.status === 200) {
       statusValue.innerHTML = 'Authenticated';
@@ -66,6 +82,13 @@ import { checkAuthRequest, loginWithGoogleAccount } from './requests';
     updateDom(res);
 
     res.status === 200 ? (isAuth = true) : (isAuth = false);
+
+    if (!isAuth) {
+      await logout();
+      // TODO: login with google account
+      // await loginWithGoogleAccount();
+    }
+
     return isAuthStorage.set(isAuth, () => {
       updateStatus(isAuth);
     });
