@@ -62,7 +62,7 @@ import { checkAuthRequest, loginWithGoogleAccount, logout } from './requests';
     // linkWrapper.classList = 'button'
     link.href = 'https://www.jotform.com/';
     link.setAttribute('target', '_blank');
-    link.innerHTML = 'Go to the JotForm';
+    link.innerHTML = 'Go to JotForm';
     link.className = 'button';
     linkWrapper.appendChild(link);
 
