@@ -1,7 +1,7 @@
 {
   "name": "jf-check-auth",
   "version": "0.1.0",
-  "description": "My Chrome Extension",
+  "description": "JotForm Check Authentication extension",
   "private": true,
   "scripts": {
     "watch": "webpack --mode=development --watch --config config/webpack.config.js",

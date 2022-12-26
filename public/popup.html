@@ -9,26 +9,24 @@
 
 <body>
   <div class="app">
-    <img class="podo-pixel-art" src="./icons/pixel-art-2.jpg" alt="Poto Pixel Art">
+    <div class="wrapper">
+      <img class="podo-pixel-art" src="./icons/pixel-art-2.jpg" alt="Poto Pixel Art">
+      <p class="check-auth-label">
+        <span class="jotform">Jotform</span>&nbsp;Check Authentication
+      </p>
 
-    <p class="check-auth-label">
-      <span class="jotform">Jotform</span>&nbsp;Check Authentication
-    </p>
-
-    <p class="status-label">
-      <span class="status">
-        <span class="status-text">Status:</span>
-        <span id="status-value" class="status-value">⌛️</span>
-      </span>
-    <div id="go-jf">
-      <!-- <a href="sadf">test</a> -->
+      <p class="status-label">
+        <span class="status">
+          <span class="status-text">Status:</span>
+          <span id="status-value" class="status-value">⌛️</span>
+        </span>
+      <div id="go-jf"></div>
+      </p>
+      <hr class="divider" />
+      <div class="button-container">
+        <button id="check-button" class="button">Check Authentication</button>
+      </div>
     </div>
-    </p>
-
-    <div class="button-container">
-      <button id="check-button" class="button">Check Authentication</button>
-    </div>
-    <!-- <hr class="divider" /> -->
     <script src="popup.js"></script>
     <!--
         This HTML file opens when you click on icon from the toolbar.

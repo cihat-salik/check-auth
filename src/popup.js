@@ -54,16 +54,16 @@ import { checkAuthRequest, loginWithGoogleAccount, logout } from './requests';
     const checkButton = document.getElementById('check-button');
     const statusValue = document.getElementById('status-value');
     const linkWrapper = document.getElementById('go-jf');
-    if (!checkButton && !statusValue) return;
+    if (!checkButton && !statusValue && !linkWrapper) return;
 
     // check button to child elements because it can be added before
     if (linkWrapper.children.length > 0) return;
     const link = document.createElement('a');
-    linkWrapper.classList = 'button'
+    // linkWrapper.classList = 'button'
     link.href = 'https://www.jotform.com/';
     link.setAttribute('target', '_blank');
     link.innerHTML = 'Go to the JotForm';
-    link.className = 'link';
+    link.className = 'button';
     linkWrapper.appendChild(link);
 
     if (res.status === 200) {
