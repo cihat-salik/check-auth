@@ -12,10 +12,7 @@
 // See https://developer.chrome.com/extensions/content_scripts
 
 // Log `title` of current active web page
-const pageTitle = document.head.getElementsByTagName('title')[0].innerHTML;
-console.log(
-  `Page title is: '${pageTitle}' - evaluated by Chrome extension's 'contentScript.js' file`
-);
+// const pageTitle = document.head.getElementsByTagName('title')[0].innerHTML;
 
 // Communicate with background file by sending a message
 // chrome.runtime.sendMessage(
@@ -42,6 +39,6 @@ console.log(
 //   return true;
 // });
 
-chrome.storage.local.get(['isAuth'], function (result) {
-  console.log('Value currently is ' + result.isAuth);
-});
+// chrome.storage.local.get(['isAuth'], function (result) {
+//   console.log('Value currently is ' + result.isAuth);
+// });
