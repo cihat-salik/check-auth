@@ -1,6 +1,6 @@
-# <img src="public/icons/icon_48.png" width="45" align="left"> JotForm Check Auth
+# <img src="public/icons/icon_48.png" width="45" align="left"> Check Auth
 
-## jf-check-auth
+## check-auth
 
 ## Features
 
